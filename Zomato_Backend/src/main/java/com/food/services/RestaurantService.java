@@ -29,12 +29,34 @@ public class RestaurantService {
     }
 
     public Restaurant updateRestaurant(Long id, Restaurant restaurantDetails) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
-        if (restaurant != null) {
-            // Update fields from restaurantDetails
-            return restaurantRepository.save(restaurant);
-        }
-        return null;
+        return restaurantRepository.findById(id)
+            .map(restaurant -> {
+                // Updating all fields
+                restaurant.setRestaurantName(restaurantDetails.getRestaurantName());
+                restaurant.setContactNumber(restaurantDetails.getContactNumber());
+                restaurant.setAddress(restaurantDetails.getAddress());
+                restaurant.setLatitude(restaurantDetails.getLatitude());
+                restaurant.setLongitude(restaurantDetails.getLongitude());
+                restaurant.setEmail(restaurantDetails.getEmail());
+                restaurant.setContactPerson(restaurantDetails.getContactPerson());
+                restaurant.setOpeningTime(restaurantDetails.getOpeningTime());
+                restaurant.setClosingTime(restaurantDetails.getClosingTime());
+                restaurant.setCurrentStatus(restaurantDetails.getCurrentStatus());
+                restaurant.setActive(restaurantDetails.getActive());
+                restaurant.setOtp(restaurantDetails.getOtp());
+                restaurant.setLogo(restaurantDetails.getLogo());
+                restaurant.setCity(restaurantDetails.getCity());
+                restaurant.setState(restaurantDetails.getState());
+                restaurant.setPincode(restaurantDetails.getPincode());
+                restaurant.setType(restaurantDetails.getType());
+                restaurant.setCuision(restaurantDetails.getCuision());
+                restaurant.setDescription(restaurantDetails.getDescription());
+                return restaurantRepository.save(restaurant);
+            })
+            .orElseGet(() -> {
+                restaurantDetails.setRestaurantId(id);
+                return restaurantRepository.save(restaurantDetails);
+            });
     }
 
     public void deleteRestaurant(Long id) {

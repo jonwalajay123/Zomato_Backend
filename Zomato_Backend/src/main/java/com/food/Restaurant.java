@@ -1,11 +1,16 @@
 package com.food;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,7 +21,7 @@ public class Restaurant {
 	    private Long restaurantId;
 	    private String restaurantName;
 	    private String contactNumber;
-	    private String Address;
+	    private String address;
 	    private String latitude;
 	    private String longitude;
 	    private String email;
@@ -33,6 +38,22 @@ public class Restaurant {
 	    private String type;
 	    private String cuision;
 	    private String description;
+	    
+	    @JsonManagedReference
+	    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+	    private List<Items> items;
+	    
+	    
+		public Restaurant(List<Items> items) {
+			super();
+			this.items = items;
+		}
+		public List<Items> getItems() {
+			return items;
+		}
+		public void setItems(List<Items> items) {
+			this.items = items;
+		}
 		public Long getRestaurantId() {
 			return restaurantId;
 		}
@@ -50,12 +71,12 @@ public class Restaurant {
 		}
 		public void setContactNumber(String contactNumber) {
 			this.contactNumber = contactNumber;
-		}
+		}		
 		public String getAddress() {
-			return Address;
+			return address;
 		}
 		public void setAddress(String address) {
-			Address = address;
+			this.address = address;
 		}
 		public String getLatitude() {
 			return latitude;
@@ -153,15 +174,17 @@ public class Restaurant {
 		public void setDescription(String description) {
 			this.description = description;
 		}
+		
+		
 		public Restaurant(Long restaurantId, String restaurantName, String contactNumber, String address,
 				String latitude, String longitude, String email, String contactPerson, LocalTime openingTime,
 				LocalTime closingTime, String currentStatus, String active, String otp, String logo, String city,
-				String state, String pincode, String type, String cuision, String description) {
+				String state, String pincode, String type, String cuision, String description, List<Items> items) {
 			super();
 			this.restaurantId = restaurantId;
 			this.restaurantName = restaurantName;
 			this.contactNumber = contactNumber;
-			Address = address;
+			this.address = address;
 			this.latitude = latitude;
 			this.longitude = longitude;
 			this.email = email;
@@ -178,6 +201,7 @@ public class Restaurant {
 			this.type = type;
 			this.cuision = cuision;
 			this.description = description;
+			this.items = items;
 		}
 		public Restaurant() {
 			super();
