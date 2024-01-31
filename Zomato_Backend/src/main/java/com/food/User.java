@@ -9,27 +9,27 @@ import jakarta.persistence.Table;
 @Entity
 @Table
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String firstName;
-	private String lastName;
-	private String contact;
-	private String alternateContact;
-	private String email;
-	private String addressType;
-	private String address;
-	private String city;
-	private String latitude;
-	private String longitude;
-	private String pincode;
-	private String otp;
-	private String active;
-	public int getId() {
-		return id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
+    private String firstName;
+    private String lastName;
+    private String contact;
+    private String alternateContact;
+    private String email;
+    private String addressType;
+    private String address;
+    private String city;
+    private String latitude;
+    private String longitude;
+    private String pincode;
+    private String otp;
+    private String active;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -109,8 +109,31 @@ public class User {
 	public void setActive(String active) {
 		this.active = active;
 	}
-	
-	
-	
+	public User(Long userId, String firstName, String lastName, String contact, String alternateContact, String email,
+			String addressType, String address, String city, String latitude, String longitude, String pincode,
+			String otp, String active) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.contact = contact;
+		this.alternateContact = alternateContact;
+		this.email = email;
+		this.addressType = addressType;
+		this.address = address;
+		this.city = city;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.pincode = pincode;
+		this.otp = otp;
+		this.active = active;
+	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+    
 }
+
+

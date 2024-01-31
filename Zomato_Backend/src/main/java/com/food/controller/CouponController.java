@@ -1,7 +1,7 @@
 package com.food.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +9,17 @@ import com.food.Coupon;
 import com.food.services.CouponService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/coupons")
 public class CouponController {
-
     @Autowired
     private CouponService couponService;
+
+    @PostMapping
+    public Coupon createCoupon(@RequestBody Coupon coupon) {
+        return couponService.createCoupon(coupon);
+    }
 
     @GetMapping
     public List<Coupon> getAllCoupons() {
@@ -25,27 +28,25 @@ public class CouponController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Coupon> getCouponById(@PathVariable Long id) {
-        Optional<Coupon> coupon = couponService.getCouponById(id);
-        return coupon.map(value -> ResponseEntity.ok().body(value))
-                     .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<Coupon> createCoupon(@RequestBody Coupon coupon) {
-        Coupon createdCoupon = couponService.createOrUpdateCoupon(coupon);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCoupon);
+        Coupon coupon = couponService.getCouponById(id);
+        if (coupon != null) {
+            return ResponseEntity.ok(coupon);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @RequestBody Coupon coupon) {
-        coupon.setCouponId(id); // Ensure the ID is set
-        Coupon updatedCoupon = couponService.createOrUpdateCoupon(coupon);
-        return ResponseEntity.ok().body(updatedCoupon);
+    public ResponseEntity<Coupon> updateCoupon(@PathVariable Long id, @RequestBody Coupon couponDetails) {
+        Coupon updatedCoupon = couponService.updateCoupon(id, couponDetails);
+        if (updatedCoupon != null) {
+            return ResponseEntity.ok(updatedCoupon);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCoupon(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCoupon(@PathVariable Long id) {
         couponService.deleteCoupon(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
