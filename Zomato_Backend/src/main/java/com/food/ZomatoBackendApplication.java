@@ -8,6 +8,7 @@ public class ZomatoBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ZomatoBackendApplication.class, args);
+		System.out.println("progrm run successfully");
 	}
 
 }
