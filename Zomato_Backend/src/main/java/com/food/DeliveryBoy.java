@@ -1,5 +1,7 @@
 package com.food;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,8 @@ public class DeliveryBoy {
 	    private String currentStatus;
 	    private String active;
 	    private String city;
+	    
+	    
 		public Long getDeliveryboyId() {
 			return deliveryboyId;
 		}

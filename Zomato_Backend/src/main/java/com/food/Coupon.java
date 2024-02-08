@@ -3,11 +3,16 @@ package com.food;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +27,7 @@ public class Coupon {
 	private String minimumOrder;
 	private LocalDate startDate;
 	private  LocalDate expiryDate;
+	
 	public Long getCouponId() {
 		return couponId;
 	}
